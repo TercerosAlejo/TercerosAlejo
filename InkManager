@@ -1,0 +1,38 @@
+# 🖋️ InkManager
+
+**Plataforma SaaS integral para la gestión operativa y comunicación automatizada de estudios de tatuajes.**
+
+[![Deploy en Vercel](https://img.shields.io/badge/Demo_en_Vivo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ink-manager-woad.vercel.app)
+
+---
+
+## 📋 Descripción del Proyecto
+
+**InkManager** centraliza y digitaliza la administración diaria de estudios de tatuajes, permitiendo gestionar turnos, artistas, clientes y canales de atención desde un único panel. El proyecto fue desarrollado con un fuerte enfoque en la escalabilidad, la integridad de los datos y la experiencia de usuario, integrando comunicación directa mediante la API oficial de WhatsApp Cloud.
+
+### ✨ Funcionalidades Principales
+
+* **Gestión de Turnos y Agenda:** Organización de sesiones por artista, disponibilidad horaria y estado de las reservas.
+* **Administración de Clientes y Estudios:** Registro centralizado de historial de sesiones, perfiles de tatuadores y métricas operativas.
+* **Integración con WhatsApp Cloud API (Embedded Signup):** Flujo de vinculación automatizada para que cada estudio conecte su propia cuenta de WhatsApp Business (WABA) mediante OAuth y eventos de sesión en tiempo real.
+* **Autenticación y Seguridad:** Control de acceso basado en roles y manejo seguro de variables de entorno entre desarrollo y producción.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Capa | Tecnologías |
+| :--- | :--- |
+| **Frontend** | Next.js, React, TypeScript / JavaScript, Tailwind CSS |
+| **Backend** | Node.js, Express.js, API REST |
+| **Base de Datos & ORM** | PostgreSQL, Prisma ORM |
+| **Integraciones** | Meta Graph API / WhatsApp Cloud API (Embedded Signup & Webhooks) |
+| **Despliegue & Control** | Vercel, Git, GitHub |
+
+---
+
+## 🏗️ Arquitectura e Integración con Meta
+
+1. El frontend inicializa el SDK de Facebook y escucha eventos `postMessage` (`WA_EMBEDDED_SIGNUP`) para capturar dinámicamente el `waba_id` y el `phone_number_id` de cada estudio.
+2. Al finalizar la autorización, el cliente envía el `code` de un solo uso junto con los metadatos de sesión al servidor en Express.
+3. El backend intercambia dicho código por un `access_token` a través de Meta Graph API y persiste las credenciales vinculadas al estudio en PostgreSQL mediante Prisma.
